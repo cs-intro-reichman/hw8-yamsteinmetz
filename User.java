@@ -127,18 +127,12 @@
 //         return ans;
 //     }
 // }
-/** Represents a user in a social network. A user is characterized by a name,
- *  a list of user names that s/he follows, and the list's size. */
- public class User {
-
-    // Maximum number of users that a user can follow
+public class User {
     static int maxfCount = 10;
+    private String name;
+    private String[] follows;
+    private int fCount;
 
-    private String name;       // name of this user
-    private String[] follows;  // array of user names that this user follows
-    private int fCount;        // actual number of followees (must be <= maxfCount)
-
-    /** Creates a user with an empty list of followees. */
     public User(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty.");
@@ -148,7 +142,6 @@
         fCount = 0;
     }
 
-    /** Creates a user with some followees. */
     public User(String name, boolean gettingStarted) {
         this(name);
         follows[0] = "Foo";
@@ -207,41 +200,5 @@
             }
         }
         return false;
-    }
-
-    public int countMutual(User other) {
-        if (other == null) {
-            return 0;
-        }
-        int count = 0;
-        for (int i = 0; i < other.getfCount(); i++) {
-            String currentFollowerOfOther = other.getfFollows()[i];
-            if (this.follows(currentFollowerOfOther)) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public boolean isFriendOf(User other) {
-        if (other == null) {
-            return false;
-        }
-        return other.follows(this.name) && this.follows(other.getName());
-    }
-
-    public String toString() {
-        StringBuilder ans = new StringBuilder(name + " -> ");
-        if (fCount == 0) {
-            ans.append("No followees");
-        } else {
-            for (int i = 0; i < fCount; i++) {
-                ans.append(follows[i]);
-                if (i < fCount - 1) {
-                    ans.append(", ");
-                }
-            }
-        }
-        return ans.toString();
     }
 }
